@@ -1,6 +1,4 @@
-
-
-import linkedlist.DoublyLinkedList;
+import datastructure.linkedlist.DoublyLinkedList;
 
 public class Main {
     
