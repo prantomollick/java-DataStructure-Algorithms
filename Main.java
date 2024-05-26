@@ -6,11 +6,13 @@ public class Main {
     
 
     public static void main(String[] args ) {
-        ArrayStack<int[]> stock = new ArrayStack<int[]>();
+        ArrayStack<String> stock = new ArrayStack<String>();
 
-        int[] arr = {1, 2, 3};
+        
 
-        stock.push(arr);
+        stock.push("Rahim");
+        stock.push("Kadher");
+        stock.push("Salam");
 
         System.out.println(stock.peek());
 
