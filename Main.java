@@ -1,31 +1,29 @@
-import linkedlist.SinglyLinkedList;
+
+
+import linkedlist.DoublyLinkedList;
 
 public class Main {
     
 
     public static void main(String[] args ) {
-        SinglyLinkedList list = new SinglyLinkedList();
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
 
 
         //Insert nodes
-        list.insertAtHead(10);
-        list.insertAtTail(20);
-        list.insertAtTail(30);
-        list.insertAtTail(40);
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.add(40);
 
-        list.insertAtPosition(15, 2);
+        // System.out.println(list.toString());
+        System.out.println(list.size());
         
-        
-        
-        //print the list
-        System.out.println("Orginal list:");
-        list.printList();
+        java.util.Iterator<Integer> nextItem = list.iterator();
 
-        list.delete(20);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(nextItem.next());
+        }
 
-         // Print the list after deletion
-         System.out.println("\nList after deleting 20:");
-         list.printList(); 
     }
 
 }
