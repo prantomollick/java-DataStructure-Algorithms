@@ -1,0 +1,7 @@
+Trie
+    Node
+        value: char
+        children: Node[26]
+        isEndOfWord: boolean
+insert(word: String)
+index = ch - 'a' //a-97 d-100  means 100-97 = 3

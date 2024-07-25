@@ -1,0 +1,22 @@
+Graph
+    Node
+        label: String;
+
+    addNode(label)
+    removeNode(label)
+    addEdge(from, to)
+    removeEdge(from, to)
+    print()
+        A is connected with [B, C]
+        B is connected with [A]
+
+-----------------------------------------------------------
+Weighted Graph
+    Node
+    Edge
+        from
+        to
+        weight
+
+    addNode()
+    addEdge(from, to, weight)
