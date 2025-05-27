@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive DSA Foundation Guide | ইন্টারেক্টিভ ডিএসএ ফাউন্ডেশন গাইড</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Assuming Inter is available or falls back to Tailwind's sans-serif */
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            border-color: #4f46e5; /* indigo-600 */
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .resource-card, .ds-algo-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .resource-card:hover, .ds-algo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px; /* Max width for the chart */
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px; /* Base height */
+            max-height: 500px; /* Max height */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 450px;
+            }
+        }
+        h1, h2, h3 {
+          font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-slate-800">
+
+    <header class="bg-indigo-600 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold">Interactive DSA Foundation Guide</h1>
+            <p class="text-xl sm:text-2xl mt-1">ইন্টারেক্টিভ ডিএসএ ফাউন্ডেশন গাইড</p>
+        </div>
+    </header>
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center items-center -mb-px">
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 active" data-tab="intro">ভূমিকা (Intro)</button>
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500" data-tab="fundamentals">মূলনীতি (Fundamentals)</button>
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500" data-tab="datastructures">ডেটা স্ট্রাকচার (Data Structures)</button>
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500" data-tab="algorithms">অ্যালগরিদম (Algorithms)</button>
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500" data-tab="plan">১-মাসের প্ল্যান (1-Month Plan)</button>
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500" data-tab="resources">রিসোর্স (Resources)</button>
+                <button class="tab-button text-sm sm:text-base py-3 px-3 sm:px-4 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500" data-tab="mindset">মাইন্ডসেট (Mindset)</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <section id="intro" class="content-section active">
+            <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Your Journey to FANG Begins Here! (আপনার FANG যাত্রা এখান থেকেই শুরু!)</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    A heartfelt welcome to a fellow Computer Science and Engineering (CSE) graduate. The aspiration to work at world-class companies like FANG (Facebook, Amazon, Apple, Netflix, Google) is a commendable and natural goal for many. This interactive guide serves as a comprehensive roadmap, designed by an expert with 17 years of experience in Data Structures and Algorithms (DSA) and FANG interview preparation, to support this journey.
+                </p>
+                <p class="mb-4 text-lg leading-relaxed">
+                    এই ইন্টারেক্টিভ গাইডটি আপনাকে ডেটা স্ট্রাকচার এবং অ্যালগরিদম (ডিএসএ) এর মৌলিক বিষয়গুলি বুঝতে, আপনার সমস্যা সমাধানের দক্ষতা বাড়াতে এবং FANG কোম্পানির ইন্টারভিউর জন্য প্রস্তুত হতে সাহায্য করবে। যদিও এই পথটি চ্যালেঞ্জিং, সঠিক পদ্ধতি এবং উৎসর্গের সাথে এটি সম্পূর্ণরূপে অর্জনযোগ্য।
+                </p>
+                <div class="mt-6 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-2">Why DSA is Your Golden Ticket (কেন ডিএসএ আপনার গোল্ডেন টিকেট)</h3>
+                    <p class="mb-2"><strong>Data Structures (Your LEGO Bricks / আপনার লেগো ব্রিকস):</strong> Think of data structures as different types of LEGO bricks. They are specific ways to organize and store data in a computer, making it easy to access and modify. (ডেটা স্ট্রাকচারগুলি বিভিন্ন ধরণের লেগো ব্রিকসের মতো। এগুলি কম্পিউটারে ডেটা সংগঠিত এবং সংরক্ষণ করার নির্দিষ্ট উপায়, যা ডেটা অ্যাক্সেস এবং পরিবর্তন করা সহজ করে তোলে।)</p>
+                    <p><strong>Algorithms (Your Recipes / আপনার রেসিপি):</strong> An algorithm is like a step-by-step recipe. It's a set of instructions that tells the computer exactly what to do to solve a problem or perform a task. (অ্যালগরিদম একটি ধাপে ধাপে রেসিপির মতো। এটি নির্দেশাবলীর একটি সেট যা কম্পিউটারকে কোনও সমস্যা সমাধান বা কোনও কাজ সম্পাদনের জন্য ঠিক কী করতে হবে তা বলে দেয়।)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fundamentals" class="content-section">
+            <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-6">The Absolute Basics - What are DSA? (মৌলিক বিষয়াবলী - ডিএসএ কী?)</h2>
+                
+                <div class="mb-6 p-4 border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-2">What is Data Structure? (ডেটা স্ট্রাকচার কী?)</h3>
+                    <p class="mb-2 leading-relaxed">A data structure is a specialized method of organizing and storing data within a computer's memory to facilitate efficient use. It’s like the blueprint for how information lives in memory.</p>
+                    <p class="leading-relaxed">ডেটা স্ট্রাকচার হলো কম্পিউটারের মেমরিতে ডেটা সংগঠিত এবং সংরক্ষণ করার একটি বিশেষ পদ্ধতি যা কার্যকর ব্যবহার নিশ্চিত করে। এটি তথ্যের মেমরিতে থাকার স্থাপত্য নীলনকশার মতো।</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700">
+                        <li><strong>Linear vs. Non-linear:</strong> Sequential vs. random access. (রৈখিক বনাম অ-রৈখিক: ক্রমানুসারী বনাম এলোমেলো অ্যাক্সেস।)</li>
+                        <li><strong>Static vs. Dynamic:</strong> Fixed size vs. resizable. (স্ট্যাটিক বনাম ডাইনামিক: নির্দিষ্ট আকার বনাম পরিবর্তনযোগ্য আকার।)</li>
+                        <li><strong>Common Operations:</strong> Traversal, Insertion, Deletion, Searching, Sorting. (সাধারণ কার্যাবলী: ট্রাভার্সাল, সন্নিবেশ, মুছে ফেলা, অনুসন্ধান, বাছাই।)</li>
+                    </ul>
+                </div>
+
+                <div class="mb-6 p-4 border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-2">What is an Algorithm? (অ্যালগরিদম কী?)</h3>
+                    <p class="mb-2 leading-relaxed">An algorithm is a precise, step-by-step procedure or a defined set of instructions formulated to solve a particular problem or accomplish a specific task. It’s a clear sequence of actions.</p>
+                    <p class="leading-relaxed">অ্যালগরিদম হলো একটি নির্দিষ্ট সমস্যা সমাধানের জন্য বা একটি নির্দিষ্ট কাজ সম্পন্ন করার জন্য প্রণীত একটি সুনির্দিষ্ট, ধাপে ধাপে পদ্ধতি বা নির্দেশাবলীর একটি সেট। এটি কর্মের একটি পরিষ্কার ক্রম।</p>
+                </div>
+
+                <div class="p-4 border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-2">Understanding Time and Space Complexity (সময় এবং স্থান জটিলতা বোঝা)</h3>
+                    <p class="mb-2 leading-relaxed">This is the "efficiency score" of your code, measuring how runtime (Time Complexity) and memory usage (Space Complexity) scale with input size. Big O Notation (O()) is commonly used to describe the worst-case scenario.</p>
+                    <p class="leading-relaxed">এটি আপনার কোডের "দক্ষতা স্কোর", যা ইনপুট আকারের সাথে রানটাইম (সময় জটিলতা) এবং মেমরি ব্যবহার (স্থান জটিলতা) কীভাবে বৃদ্ধি পায় তা পরিমাপ করে। বিগ ও নোটেশন (O()) সাধারণত সবচেয়ে খারাপ পরিস্থিতি বর্ণনা করতে ব্যবহৃত হয়।</p>
+                     <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700">
+                        <li><strong>O(1):</strong> Constant time (খুব দ্রুত).</li>
+                        <li><strong>O(log N):</strong> Logarithmic time (বেশ দ্রুত).</li>
+                        <li><strong>O(N):</strong> Linear time (ইনপুটের সাথে সাথে বাড়ে).</li>
+                        <li><strong>O(N log N):</strong> Linearithmic time (ভালো সর্টিং অ্যালগরিদমের জন্য).</li>
+                        <li><strong>O(N<sup>2</sup>):</strong> Quadratic time (তুলনামূলকভাবে ধীর).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="datastructures" class="content-section">
+             <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-6">Your DSA Toolkit - Essential Data Structures (আপনার ডিএসএ টুলকিট - অপরিহার্য ডেটা স্ট্রাকচার)</h2>
+                <p class="mb-6 text-lg leading-relaxed">This section introduces the foundational data structures. Click on each data structure to learn more about its concept, superpowers, and common use cases. (এই বিভাগে মৌলিক ডেটা স্ট্রাকচারগুলি পরিচিত করানো হয়েছে। প্রতিটি ডেটা স্ট্রাকচার সম্পর্কে আরও জানতে তার উপর ক্লিক করুন।)</p>
+                <div id="dataStructuresContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                <div id="dsDetailView" class="mt-8 p-6 bg-indigo-50 rounded-lg border border-indigo-200" style="display: none;">
+                    <h3 id="dsDetailTitle" class="text-2xl font-semibold text-indigo-700 mb-3"></h3>
+                    <p class="mb-2"><strong class="text-indigo-600">ধারণা (Concept):</strong> <span id="dsDetailConcept"></span></p>
+                    <p class="mb-2"><strong class="text-indigo-600">সুপারপাওয়ার/শক্তি (Superpower/Strengths):</strong> <span id="dsDetailSuperpower"></span></p>
+                    <p class="mb-2"><strong class="text-indigo-600">সাধারণ ব্যবহার (Common Use Cases):</strong> <span id="dsDetailUseCases"></span></p>
+                    <div class="mt-3">
+                        <h4 class="text-lg font-semibold text-indigo-600 mb-1">গুরুত্বপূর্ণ জটিলতা (Key Complexities):</h4>
+                        <ul id="dsDetailComplexities" class="list-disc list-inside space-y-1 text-slate-700"></ul>
+                    </div>
+                    <button id="closeDsDetail" class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md transition-colors">বন্ধ করুন (Close)</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="algorithms" class="content-section">
+            <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-6">Your Algorithmic Playbook - Essential Algorithms (আপনার অ্যালগরিদমিক প্লেবুক - অপরিহার্য অ্যালগরিদম)</h2>
+                <p class="mb-6 text-lg leading-relaxed">Explore crucial algorithms. Click on each algorithm to understand its core idea, when to use it, and its typical complexities. (গুরুত্বপূর্ণ অ্যালগরিদমগুলি অন্বেষণ করুন। প্রতিটি অ্যালগরিদমের মূল ধারণা, কখন এটি ব্যবহার করতে হবে এবং এর সাধারণ জটিলতাগুলি বুঝতে তার উপর ক্লিক করুন।)</p>
+                <div id="algorithmsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                 <div id="algoDetailView" class="mt-8 p-6 bg-teal-50 rounded-lg border border-teal-200" style="display: none;">
+                    <h3 id="algoDetailTitle" class="text-2xl font-semibold text-teal-700 mb-3"></h3>
+                    <p class="mb-2"><strong class="text-teal-600">মূল ধারণা (Core Idea):</strong> <span id="algoDetailIdea"></span></p>
+                    <p class="mb-2"><strong class="text-teal-600">কখন ব্যবহার করবেন / সমস্যার ধরণ (When to Use / Problem Type):</strong> <span id="algoDetailWhenToUse"></span></p>
+                    <div class="mt-3">
+                        <h4 class="text-lg font-semibold text-teal-600 mb-1">সাধারণ জটিলতা (Typical Complexities):</h4>
+                        <p id="algoDetailComplexity" class="text-slate-700"></p>
+                    </div>
+                    <button id="closeAlgoDetail" class="mt-4 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-md transition-colors">বন্ধ করুন (Close)</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="content-section">
+            <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Your 1-Month DSA Super-Plan (আপনার ১-মাসের ডিএসএ সুপার-প্ল্যান)</h2>
+                <p class="mb-6 text-lg leading-relaxed">
+                    This is an accelerated 1-month plan to build a strong DSA foundation. Consistency is key! Expand each week to see the daily focus. (এটি একটি দ্রুতগতির ১-মাসের পরিকল্পনা যা ডিএসএ-এর শক্তিশালী ভিত্তি তৈরি করবে। ধারাবাহিকতা এখানে মুখ্য! প্রতিদিনের ফোকাস দেখতে প্রতিটি সপ্তাহ প্রসারিত করুন।)
+                </p>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-3">Study Plan Topic Distribution (মাসিক অধ্যয়ন পরিকল্পনা: বিষয়বস্তু বিতরণ)</h3>
+                    <div class="chart-container bg-slate-50 p-4 rounded-lg">
+                        <canvas id="studyPlanChart"></canvas>
+                    </div>
+                </div>
+
+                <div id="studyPlanAccordionContainer" class="space-y-3">
+                    </div>
+            </div>
+        </section>
+
+        <section id="resources" class="content-section">
+            <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-6">Your Learning Arsenal - Top Resources (আপনার শেখার অস্ত্রাগার - সেরা রিসোর্স)</h2>
+                <p class="mb-6 text-lg leading-relaxed">Leverage these high-quality resources for efficient DSA learning. (দক্ষ ডিএসএ শেখার জন্য এই উচ্চ-মানের রিসোর্সগুলি ব্যবহার করুন।)</p>
+                
+                <div id="resourcesBooks" class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-3">বই (Books)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+                <div id="resourcesYouTube" class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-3">ইউটিউব চ্যানেল (YouTube Channels)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+                <div id="resourcesPlatforms" class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-3">অনলাইন প্ল্যাটফর্ম (Online Platforms for Practice)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+                <div id="resourcesRepos">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-3">গিট রিপোজিটরি/ব্লগ (Git Repositories/Blogs)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mindset" class="content-section">
+            <div class="bg-white p-6 rounded-lg shadow-xl">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-6">Thinking Like a Programmer - Your FANG Mindset (প্রোগ্রামারের মতো চিন্তা করা - আপনার FANG মাইন্ডসেট)</h2>
+                <p class="mb-6 text-lg leading-relaxed">Beyond technical knowledge, FANG companies highly value a specific problem-solving mindset and effective communication skills. (প্রযুক্তিগত জ্ঞানের বাইরে, FANG কোম্পানিগুলি একটি নির্দিষ্ট সমস্যা-সমাধানের মানসিকতা এবং কার্যকর যোগাযোগ দক্ষতাকে অত্যন্ত মূল্য দেয়।)</p>
+
+                <div class="mb-6 p-4 border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-2">Problem-Solving Methodology (The FANG Way) (সমস্যা সমাধানের পদ্ধতি - FANG স্টাইল)</h3>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li><strong>Understand Thoroughly:</strong> Ask clarifying questions. (সম্পূর্ণরূপে বুঝুন: স্পষ্টীকরণের জন্য প্রশ্ন জিজ্ঞাসা করুন।)</li>
+                        <li><strong>Break Down Problem:</strong> Divide into smaller parts. (সমস্যাটি ভেঙে ফেলুন: ছোট অংশে ভাগ করুন।)</li>
+                        <li><strong>Plan Approach:</strong> Outline solution, consider complexity. (পদ্ধতির পরিকল্পনা করুন: সমাধানের রূপরেখা তৈরি করুন, জটিলতা বিবেচনা করুন।)</li>
+                        <li><strong>Start Simple (Brute Force):</strong> Optimize later. (সহজভাবে শুরু করুন (ব্রুট ফোর্স): পরে অপ্টিমাইজ করুন।)</li>
+                        <li><strong>Leverage Knowledge:</strong> Recognize patterns. (জ্ঞান ব্যবহার করুন: প্যাটার্ন চিনুন।)</li>
+                        <li><strong>Visualize:</strong> Draw diagrams. (দৃশ্যমান করুন: ডায়াগ্রাম আঁকুন।)</li>
+                        <li><strong>Optimize:</strong> Improve time/space complexity. (অপ্টিমাইজ করুন: সময়/স্থান জটিলতা উন্নত করুন।)</li>
+                        <li><strong>Handle Edge Cases:</strong> Consider unusual inputs. (এজ কেসগুলি পরিচালনা করুন: অস্বাভাবিক ইনপুট বিবেচনা করুন।)</li>
+                        <li><strong>Test and Debug:</strong> Ensure correctness. (পরীক্ষা এবং ডিবাগ করুন: সঠিকতা নিশ্চিত করুন।)</li>
+                    </ul>
+                </div>
+
+                <div class="p-4 border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                    <h3 class="text-xl font-semibold text-indigo-600 mb-2">Communication is Key (যোগাযোগই প্রধান)</h3>
+                     <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li><strong>Verbalize Thoughts:</strong> Explain your process. (আপনার চিন্তা প্রকাশ করুন: আপনার প্রক্রিয়া ব্যাখ্যা করুন।)</li>
+                        <li><strong>Ask Clarifying Questions:</strong> Show engagement. (স্পষ্টীকরণের প্রশ্ন জিজ্ঞাসা করুন: সম্পৃক্ততা দেখান।)</li>
+                        <li><strong>Structured Communication:</strong> Be clear and logical. (কাঠামোগত যোগাযোগ: পরিষ্কার এবং যৌক্তিক হোন।)</li>
+                        <li><strong>Discuss Trade-offs:</strong> Explain choices. (ট্রেড-অফ আলোচনা করুন: পছন্দগুলি ব্যাখ্যা করুন।)</li>
+                        <li><strong>Handle Feedback:</strong> Be open and collaborative. (প্রতিক্রিয়া পরিচালনা করুন: উন্মুক্ত এবং সহযোগী হোন।)</li>
+                        <li><strong>English Proficiency:</strong> Essential for interviews. (ইংরেজি দক্ষতা: সাক্ষাৎকারের জন্য অপরিহার্য।)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 mt-10 border-t border-slate-200">
+        <p class="text-slate-600">&copy; <span id="currentYear"></span> Interactive DSA Guide. Happy Coding! (খুশি কোডিং!)</p>
+    </footer>
+
+<script>
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const targetTab = button.getAttribute('data-tab');
+            contentSections.forEach(section => {
+                if (section.id === targetTab) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+            // Scroll to top of content for better UX on tab change
+            window.scrollTo({ top: document.querySelector('nav').offsetHeight, behavior: 'smooth' });
+        });
+    });
+    
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Data for Data Structures
+    const dataStructures = [
+        { 
+            id: 'arrays', name: 'Arrays (অ্যারে)', nameBn: 'অ্যারে',
+            concept: 'A row of numbered mailboxes, storing items in contiguous memory. (সংখ্যাযুক্ত মেলবক্সের একটি সারি, ক্রমাগত মেমরিতে আইটেম সংরক্ষণ করে।)',
+            superpower: 'O(1) access by index, efficient for sequential data. (সূচক দ্বারা O(1) অ্যাক্সেস, ক্রমিক ডেটার জন্য দক্ষ।)',
+            useCases: 'Lists of scores, game boards, fixed-size data. (স্কোরের তালিকা, গেম বোর্ড, নির্দিষ্ট আকারের ডেটা।)',
+            complexities: ['Access: O(1)', 'Search (unsorted): O(N)', 'Insertion (end): O(1) / O(N) (dynamic)', 'Deletion (end): O(1) / O(N) (dynamic)', 'Insertion/Deletion (middle): O(N)']
+        },
+        { 
+            id: 'linkedlists', name: 'Linked Lists (লিঙ্কড লিস্ট)', nameBn: 'লিঙ্কড লিস্ট',
+            concept: 'Treasure hunt clues; nodes with data and a pointer to the next node. Non-contiguous memory. (ট্রেজার হান্ট ক্লু; ডেটা সহ নোড এবং পরবর্তী নোডের একটি পয়েন্টার। অ-ক্রমাগত মেমরি।)',
+            superpower: 'O(1) insertion/deletion at ends (with tail pointer) or if pointer to node is available. Dynamic size. (প্রান্তে O(1) সন্নিবেশ/মুছে ফেলা (টেইল পয়েন্টার সহ) বা যদি নোডের পয়েন্টার উপলব্ধ থাকে। ডাইনামিক আকার।)',
+            useCases: 'Undo/redo, dynamic lists, polynomial representation, implementing Stacks/Queues. (আনডু/রিডু, ডাইনামিক তালিকা, বহুপদী উপস্থাপনা, স্ট্যাক/কিউ বাস্তবায়ন।)',
+            complexities: ['Access: O(N)', 'Search: O(N)', 'Insertion (beginning): O(1)', 'Deletion (beginning): O(1)', 'Insertion (middle/end without tail): O(N)']
+        },
+        { 
+            id: 'stacks', name: 'Stacks (স্ট্যাক)', nameBn: 'স্ট্যাক',
+            concept: 'A pile of plates; Last In, First Out (LIFO). (প্লেটের স্তূপ; শেষে আসা প্রথমে বের হবে (LIFO)।)',
+            superpower: 'Fast push/pop from one end. (এক প্রান্ত থেকে দ্রুত পুশ/পপ।)',
+            useCases: 'Browser history, function calls, expression evaluation. (ব্রাউজার ইতিহাস, ফাংশন কল, এক্সপ্রেশন মূল্যায়ন।)',
+            complexities: ['Push (Insertion): O(1)', 'Pop (Deletion): O(1)', 'Peek (Access top): O(1)', 'Search: O(N)']
+        },
+        { 
+            id: 'queues', name: 'Queues (কিউ)', nameBn: 'কিউ',
+            concept: 'Line at a store; First In, First Out (FIFO). (দোকানের লাইন; প্রথমে আসা প্রথমে বের হবে (FIFO)।)',
+            superpower: 'Fair processing order. (ন্যায্য প্রক্রিয়াকরণ ক্রম।)',
+            useCases: 'Print job queues, task scheduling, BFS algorithm. (প্রিন্ট কাজের কিউ, টাস্ক শিডিউলিং, BFS অ্যালগরিদম।)',
+            complexities: ['Enqueue (Insertion): O(1)', 'Dequeue (Deletion): O(1)', 'Peek (Access front): O(1)', 'Search: O(N)']
+        },
+        { 
+            id: 'trees', name: 'Trees (ট্রি)', nameBn: 'ট্রি',
+            concept: 'Family tree; hierarchical structure with a root and child nodes. Binary Tree has at most 2 children per node. (পারিবারিক গাছ; রুট এবং চাইল্ড নোড সহ হায়ারারকিক্যাল কাঠামো। বাইনারি ট্রিতে প্রতি নোডে সর্বাধিক ২টি চাইল্ড থাকে।)',
+            superpower: 'Efficient for hierarchical data, fast search/sort (BST). (হায়ারারকিক্যাল ডেটার জন্য দক্ষ, দ্রুত অনুসন্ধান/বাছাই (BST)।)',
+            useCases: 'File systems, databases (indexing), decision algorithms, syntax trees. (ফাইল সিস্টেম, ডাটাবেস (ইনডেক্সিং), সিদ্ধান্ত অ্যালগরিদম, সিনট্যাক্স ট্রি।)',
+            complexities: ['Search/Insert/Delete (BST Avg): O(log N)', 'Search/Insert/Delete (BST Worst): O(N)', 'Traversal: O(N)']
+        },
+        { 
+            id: 'heaps', name: 'Heaps (হিপ)', nameBn: 'হিপ',
+            concept: 'Priority pile (specialized binary tree); Max-heap (largest at root) or Min-heap (smallest at root). (অগ্রাধিকারের স্তূপ (বিশেষায়িত বাইনারি ট্রি); ম্যাক্স-হিপ (রুটে বৃহত্তম) বা মিন-হিপ (রুটে ক্ষুদ্রতম)।)',
+            superpower: 'Quickly find min/max element. Efficient for priority queues. (দ্রুত সর্বনিম্ন/সর্বোচ্চ উপাদান খুঁজুন। অগ্রাধিকার কিউগুলির জন্য দক্ষ।)',
+            useCases: 'Priority queues, scheduling tasks, Heap Sort. (অগ্রাধিকার কিউ, টাস্ক শিডিউলিং, হিপ সর্ট।)',
+            complexities: ['Insert: O(log N)', 'Delete Min/Max: O(log N)', 'Find Min/Max: O(1)']
+        },
+        { 
+            id: 'graphs', name: 'Graphs (গ্রাফ)', nameBn: 'গ্রাফ',
+            concept: 'City map; nodes (vertices) connected by edges. Can be directed or undirected, weighted or unweighted. (শহরের মানচিত্র; প্রান্ত দ্বারা সংযুক্ত নোড (ভার্টেক্স)। নির্দেশিত বা অনির্দেশিত, ওজনযুক্ত বা অ-ওজনযুক্ত হতে পারে।)',
+            superpower: 'Represents relationships and networks. (সম্পর্ক এবং নেটওয়ার্ক উপস্থাপন করে।)',
+            useCases: 'Social networks, GPS navigation, network routing, web page linking. (সামাজিক নেটওয়ার্ক, জিপিএস নেভিগেশন, নেটওয়ার্ক রাউটিং, ওয়েব পৃষ্ঠা লিঙ্কিং।)',
+            complexities: ['Add Vertex: O(1)', 'Add Edge: O(1) or O(V) (adj matrix)', 'Traversal (DFS/BFS): O(V+E)', 'Shortest Path (Dijkstra): O(E log V) or O(V^2)']
+        },
+        { 
+            id: 'hashtables', name: 'Hash Tables / HashMaps (হ্যাশ টেবিল / হ্যাশম্যাপ)', nameBn: 'হ্যাশ টেবিল',
+            concept: 'Super-fast dictionary; maps keys to values using a hash function. (সুপার-ফাস্ট অভিধান; হ্যাশ ফাংশন ব্যবহার করে কীগুলিকে মানগুলির সাথে ম্যাপ করে।)',
+            superpower: 'O(1) average time for search, insert, delete. (অনুসন্ধান, সন্নিবেশ, মুছে ফেলার জন্য গড়ে O(1) সময়।)',
+            useCases: 'Caching, databases, symbol tables, frequency counting, spam detection. (ক্যাশিং, ডাটাবেস, প্রতীক সারণী, ফ্রিকোয়েন্সি গণনা, স্প্যাম সনাক্তকরণ।)',
+            complexities: ['Search (Avg): O(1)', 'Insert (Avg): O(1)', 'Delete (Avg): O(1)', 'Search/Insert/Delete (Worst - due to collisions): O(N)']
+        }
+    ];
+
+    const dsContainer = document.getElementById('dataStructuresContainer');
+    const dsDetailView = document.getElementById('dsDetailView');
+    const dsDetailTitle = document.getElementById('dsDetailTitle');
+    const dsDetailConcept = document.getElementById('dsDetailConcept');
+    const dsDetailSuperpower = document.getElementById('dsDetailSuperpower');
+    const dsDetailUseCases = document.getElementById('dsDetailUseCases');
+    const dsDetailComplexities = document.getElementById('dsDetailComplexities');
+    const closeDsDetailButton = document.getElementById('closeDsDetail');
+
+    dataStructures.forEach(ds => {
+        const card = document.createElement('div');
+        card.className = 'ds-algo-card bg-slate-100 p-4 rounded-lg shadow-md cursor-pointer hover:bg-slate-200';
+        card.innerHTML = `<h3 class="text-lg font-semibold text-indigo-700">${ds.name}</h3>`;
+        card.addEventListener('click', () => {
+            dsDetailTitle.textContent = ds.name;
+            dsDetailConcept.textContent = ds.concept;
+            dsDetailSuperpower.textContent = ds.superpower;
+            dsDetailUseCases.textContent = ds.useCases;
+            dsDetailComplexities.innerHTML = ''; // Clear previous
+            ds.complexities.forEach(comp => {
+                const li = document.createElement('li');
+                li.textContent = comp;
+                dsDetailComplexities.appendChild(li);
+            });
+            dsContainer.style.display = 'none';
+            dsDetailView.style.display = 'block';
+        });
+        dsContainer.appendChild(card);
+    });
+    
+    closeDsDetailButton.addEventListener('click', () => {
+        dsDetailView.style.display = 'none';
+        dsContainer.style.display = 'grid';
+    });
+
+
+    // Data for Algorithms
+    const algorithms = [
+        {
+            id: 'linearsearch', name: 'Linear Search (লিনিয়ার সার্চ)', nameBn: 'লিনিয়ার সার্চ',
+            idea: 'Checks each element sequentially until the target is found. (লক্ষ্য না পাওয়া পর্যন্ত প্রতিটি উপাদান ক্রমানুসারে পরীক্ষা করে।)',
+            whenToUse: 'Unsorted data, small datasets, simple lookup. (অবাছাই করা ডেটা, ছোট ডেটাসেট, সহজ সন্ধান।)',
+            complexity: 'Time: O(N), Space: O(1)'
+        },
+        {
+            id: 'binarysearch', name: 'Binary Search (বাইনারি সার্চ)', nameBn: 'বাইনারি সার্চ',
+            idea: 'Divides search space in half repeatedly. Requires sorted data. (অনুসন্ধান স্থান বারবার অর্ধেক করে। বাছাই করা ডেটা প্রয়োজন।)',
+            whenToUse: 'Sorted data, efficient element lookup. (বাছাই করা ডেটা, দক্ষ উপাদান সন্ধান।)',
+            complexity: 'Time: O(log N), Space: O(1)'
+        },
+        {
+            id: 'mergesort', name: 'Merge Sort (মার্জ সর্ট)', nameBn: 'মার্জ সর্ট',
+            idea: 'Divide, conquer, combine (recursive). Stable sort. (ভাগ করুন, জয় করুন, একত্রিত করুন (পুনরাবৃত্তিমূলক)। স্থিতিশীল বাছাই।)',
+            whenToUse: 'Large datasets, stable sort needed, external sorting. (বড় ডেটাসেট, স্থিতিশীল বাছাই প্রয়োজন, বাহ্যিক বাছাই।)',
+            complexity: 'Time: O(N log N), Space: O(N)'
+        },
+        {
+            id: 'quicksort', name: 'Quick Sort (কুইক সর্ট)', nameBn: 'কুইক সর্ট',
+            idea: 'Divide and conquer using a pivot element. Generally faster in practice but not stable. (একটি পিভট উপাদান ব্যবহার করে ভাগ করুন এবং জয় করুন। বাস্তবে সাধারণত দ্রুত কিন্তু স্থিতিশীল নয়।)',
+            whenToUse: 'Large datasets, in-place (average), generally fast. (বড় ডেটাসেট, ইন-প্লেস (গড়), সাধারণত দ্রুত।)',
+            complexity: 'Time: O(N log N) average, O(N^2) worst; Space: O(log N) average, O(N) worst'
+        },
+         {
+            id: 'heapsort', name: 'Heap Sort (হিপ সর্ট)', nameBn: 'হিপ সর্ট',
+            idea: 'Uses a heap data structure to sort elements. In-place. (উপাদানগুলি বাছাই করতে একটি হিপ ডেটা স্ট্রাকচার ব্যবহার করে। ইন-প্লেস।)',
+            whenToUse: 'In-place sorting, when a guaranteed O(N log N) is needed. (ইন-প্লেস বাছাই, যখন একটি নিশ্চিত O(N log N) প্রয়োজন।)',
+            complexity: 'Time: O(N log N), Space: O(1)'
+        },
+        {
+            id: 'dfs', name: 'Depth-First Search (DFS - Graph) (ডেপথ-ফার্স্ট সার্চ)', nameBn: 'ডেপথ-ফার্স্ট সার্চ',
+            idea: 'Explores as deep as possible along each branch before backtracking. Uses a stack. (ব্যাকট্র্যাকিংয়ের আগে প্রতিটি শাখা বরাবর যতদূর সম্ভব অন্বেষণ করে। একটি স্ট্যাক ব্যবহার করে।)',
+            whenToUse: 'Pathfinding, cycle detection, topological sort, connectivity. (পথ খোঁজা, চক্র সনাক্তকরণ, টপোলজিক্যাল বাছাই, সংযোগ।)',
+            complexity: 'Time: O(V+E), Space: O(V) (for recursion stack or explicit stack)'
+        },
+        {
+            id: 'bfs', name: 'Breadth-First Search (BFS - Graph) (ব্রেথ-ফার্স্ট সার্চ)', nameBn: 'ব্রেথ-ফার্স্ট সার্চ',
+            idea: 'Explores level by level (all neighbors first). Uses a queue. (স্তর অনুসারে অন্বেষণ করে (প্রথমে সমস্ত প্রতিবেশী)। একটি কিউ ব্যবহার করে।)',
+            whenToUse: 'Shortest path on unweighted graphs, finding connected components, level order traversal. (অ-ওজনযুক্ত গ্রাফে সবচেয়ে ছোট পথ, সংযুক্ত উপাদান খোঁজা, লেভেল অর্ডার ট্রাভার্সাল।)',
+            complexity: 'Time: O(V+E), Space: O(V) (for queue)'
+        },
+        {
+            id: 'dp', name: 'Dynamic Programming (DP) (ডাইনামিক প্রোগ্রামিং)', nameBn: 'ডাইনামিক প্রোগ্রামিং',
+            idea: 'Breaks problems into overlapping subproblems, stores results (memoization/tabulation) to avoid re-computation. (সমস্যাগুলিকে ওভারল্যাপিং উপ-সমস্যাগুলিতে বিভক্ত করে, পুনরায় গণনা এড়াতে ফলাফল সংরক্ষণ করে (মেমোইজেশন/ট্যাবুলেশন)।)',
+            whenToUse: 'Optimization problems, counting problems (e.g., Fibonacci, Knapsack, Longest Common Subsequence). (অপ্টিমাইজেশন সমস্যা, গণনার সমস্যা (যেমন, ফিবোনাচি, ন্যাপস্যাক, দীর্ঘতম সাধারণ সাবসিকোয়েন্স)।)',
+            complexity: 'Varies (often polynomial in input size), Space: Varies (for memoization table or tabulation array)'
+        },
+        {
+            id: 'greedy', name: 'Greedy Algorithms (গ্রিডি অ্যালগরিদম)', nameBn: 'গ্রিডি অ্যালগরিদম',
+            idea: 'Makes locally optimal choices at each step hoping to find a global optimum. (বিশ্বব্যাপী সর্বোত্তম সমাধানের আশায় প্রতিটি ধাপে স্থানীয়ভাবে সর্বোত্তম পছন্দ করে।)',
+            whenToUse: 'Optimization problems where local optimum leads to global optimum (e.g., activity selection, Huffman coding, Kruskal/Prim). (অপ্টিমাইজেশন সমস্যা যেখানে স্থানীয় সর্বোত্তম বিশ্বব্যাপী সর্বোত্তম দিকে পরিচালিত করে (যেমন, কার্যকলাপ নির্বাচন, হাফম্যান কোডিং, ক্রুসকাল/প্রিম)।)',
+            complexity: 'Varies (often efficient, e.g., O(N log N) for sorting-based greedy approaches), Space: Varies'
+        },
+        {
+            id: 'backtracking', name: 'Backtracking (ব্যাকট্র্যাকিং)', nameBn: 'ব্যাকট্র্যাকিং',
+            idea: 'Explores all possible paths, reverts (backtracks) if a path is invalid or doesn\'t lead to a solution. (সমস্ত সম্ভাব্য পথ অন্বেষণ করে, যদি কোনও পথ অবৈধ হয় বা সমাধানের দিকে পরিচালিত না করে তবে প্রত্যাবর্তন (ব্যাকট্র্যাক) করে।)',
+            whenToUse: 'Combinatorial problems, puzzles (e.g., N-Queens, Sudoku, generating permutations/combinations). (সংমিশ্রণমূলক সমস্যা, ধাঁধা (যেমন, এন-কুইন্স, সুডোকু, পারমুটেশন/কম্বিনেশন তৈরি করা)।)',
+            complexity: 'Often exponential in worst case (e.g., O(2^N) or O(N!)), Space: O(N) (for recursion stack)'
+        },
+        {
+            id: 'twopointers', name: 'Two Pointers (টু পয়েন্টার)', nameBn: 'টু পয়েন্টার',
+            idea: 'Uses two pointers to traverse data (often an array/string) from same or opposite ends. (একই বা বিপরীত প্রান্ত থেকে ডেটা (প্রায়শই একটি অ্যারে/স্ট্রিং) অতিক্রম করতে দুটি পয়েন্টার ব্যবহার করে।)',
+            whenToUse: 'Sorted array problems, finding pairs, subarrays, palindromes. (সর্টেড অ্যারে সমস্যা, জোড়া খোঁজা, সাবঅ্যারে, প্যালিনড্রোম।)',
+            complexity: 'Time: O(N) or O(N log N) if sorting is needed first, Space: O(1) or O(N) for sorting'
+        },
+        {
+            id: 'slidingwindow', name: 'Sliding Window (স্লাইডিং উইন্ডো)', nameBn: 'স্লাইডিং উইন্ডো',
+            idea: 'Maintains a dynamic window (subsegment) over data (array/string) to efficiently process contiguous parts. (ধারাবাহিক অংশগুলি দক্ষতার সাথে প্রক্রিয়া করার জন্য ডেটার (অ্যারে/স্ট্রিং) উপর একটি গতিশীল উইন্ডো (সাবসেগমেন্ট) বজায় রাখে।)',
+            whenToUse: 'Subarray/substring problems (e.g., max/min sum subarray of size k, longest substring with k distinct characters). (সাবঅ্যারে/সাবস্ট্রিং সমস্যা (যেমন, আকার k-এর সর্বোচ্চ/সর্বনিম্ন যোগফলের সাবঅ্যারে, k স্বতন্ত্র অক্ষর সহ দীর্ঘতম সাবস্ট্রিং)।)',
+            complexity: 'Time: O(N), Space: O(k) or O(1) depending on what the window stores'
+        }
+    ];
+    
+    const algoContainer = document.getElementById('algorithmsContainer');
+    const algoDetailView = document.getElementById('algoDetailView');
+    const algoDetailTitle = document.getElementById('algoDetailTitle');
+    const algoDetailIdea = document.getElementById('algoDetailIdea');
+    const algoDetailWhenToUse = document.getElementById('algoDetailWhenToUse');
+    const algoDetailComplexity = document.getElementById('algoDetailComplexity');
+    const closeAlgoDetailButton = document.getElementById('closeAlgoDetail');
+
+    algorithms.forEach(algo => {
+        const card = document.createElement('div');
+        card.className = 'ds-algo-card bg-slate-100 p-4 rounded-lg shadow-md cursor-pointer hover:bg-slate-200';
+        card.innerHTML = `<h3 class="text-lg font-semibold text-teal-700">${algo.name}</h3>`;
+        card.addEventListener('click', () => {
+            algoDetailTitle.textContent = algo.name;
+            algoDetailIdea.textContent = algo.idea;
+            algoDetailWhenToUse.textContent = algo.whenToUse;
+            algoDetailComplexity.textContent = algo.complexity;
+            algoContainer.style.display = 'none';
+            algoDetailView.style.display = 'block';
+        });
+        algoContainer.appendChild(card);
+    });
+
+    closeAlgoDetailButton.addEventListener('click', () => {
+        algoDetailView.style.display = 'none';
+        algoContainer.style.display = 'grid';
+    });
+
+    // 1-Month Study Plan Data & Chart
+    const studyPlanData = {
+        labels: [
+            'Linear Structures (রৈখিক কাঠামো)', 
+            'Non-Linear (Trees, Heaps, Hash) (অ-রৈখিক)', 
+            'Core Algos (Search, Sort) (মূল অ্যালগো)', 
+            'Advanced Algos (Recursion, DP, Greedy) (উন্নত অ্যালগো)', 
+            'Graphs (গ্রাফ)', 
+            'Review & Intensive Practice (পর্যালোচনা ও অনুশীলন)'
+        ],
+        datasets: [{
+            label: 'Days Allocated (বরাদ্দকৃত দিন)',
+            data: [6, 4, 2, 6, 4, 6], // 6+4+2+6+4+6 = 28 days
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.6)',  // Teal
+                'rgba(255, 159, 64, 0.6)', // Orange
+                'rgba(255, 205, 86, 0.6)', // Yellow
+                'rgba(54, 162, 235, 0.6)', // Blue
+                'rgba(153, 102, 255, 0.6)',// Purple
+                'rgba(255, 99, 132, 0.6)'  // Red
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const studyPlanChartCtx = document.getElementById('studyPlanChart').getContext('2d');
+    new Chart(studyPlanChartCtx, {
+        type: 'bar', // Changed to bar for better readability of labels
+        data: studyPlanData,
+        options: {
+            indexAxis: 'y', // Horizontal bar chart
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Days (দিনের সংখ্যা)',
+                        font: { size: 14, weight: 'bold' }
+                    }
+                },
+                y: {
+                   ticks: {
+                       font: { size: 10 } // Smaller font for y-axis labels if needed
+                   }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false, // Title is already in the section header
+                    text: '1-Month DSA Study Plan: Topic Focus'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.x !== null) {
+                                label += context.parsed.x + ' days (দিন)';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Study Plan Accordion
+    const studyPlanAccordionData = [
+        { 
+            title: "Week 1: Foundation & Linear Structures (সপ্তাহ ১: ভিত্তি এবং রৈখিক কাঠামো)",
+            content: `
+                <ul class="list-disc list-inside space-y-1 pl-4 text-slate-700">
+                    <li><strong>Days 1-2:</strong> Introduction & Arrays/Strings (ভূমিকা এবং অ্যারে/স্ট্রিং)</li>
+                    <li><strong>Days 3-4:</strong> Linked Lists (লিঙ্কড লিস্ট)</li>
+                    <li><strong>Days 5-6:</strong> Stacks and Queues (স্ট্যাক এবং কিউ)</li>
+                    <li><strong>Day 7:</strong> Review and Practice (পর্যালোচনা এবং অনুশীলন)</li>
+                </ul>
+            `
+        },
+        { 
+            title: "Week 2: Non-Linear Structures & Core Algorithms (সপ্তাহ ২: অ-রৈখিক কাঠামো এবং মূল অ্যালগরিদম)",
+            content: `
+                <ul class="list-disc list-inside space-y-1 pl-4 text-slate-700">
+                    <li><strong>Days 8-9:</strong> Trees (Binary Trees, BSTs) (ট্রি - বাইনারি ট্রি, বিএসটি)</li>
+                    <li><strong>Days 10-11:</strong> Heaps & Hash Tables (হিপ এবং হ্যাশ টেবিল)</li>
+                    <li><strong>Days 12-13:</strong> Searching & Sorting Algorithms (অনুসন্ধান এবং বাছাই অ্যালগরিদম)</li>
+                    <li><strong>Day 14:</strong> Review and Practice (পর্যালোচনা এবং অনুশীলন)</li>
+                </ul>
+            `
+        },
+        { 
+            title: "Week 3: Advanced Algorithms & Techniques (সপ্তাহ ৩: উন্নত অ্যালগরিদম এবং কৌশল)",
+            content: `
+                <ul class="list-disc list-inside space-y-1 pl-4 text-slate-700">
+                    <li><strong>Days 15-16:</strong> Recursion & Backtracking (রিকার্সন এবং ব্যাকট্র্যাকিং)</li>
+                    <li><strong>Days 17-18:</strong> Dynamic Programming (ডাইনামিক প্রোগ্রামিং)</li>
+                    <li><strong>Days 19-20:</strong> Greedy Algorithms & Other Techniques (গ্রিডি অ্যালগরিদম এবং অন্যান্য কৌশল)</li>
+                    <li><strong>Day 21:</strong> Review and Practice (পর্যালোচনা এবং অনুশীলন)</li>
+                </ul>
+            `
+        },
+        { 
+            title: "Week 4: Graphs & Interview Readiness (সপ্তাহ ৪: গ্রাফ এবং ইন্টারভিউ প্রস্তুতি)",
+            content: `
+                <ul class="list-disc list-inside space-y-1 pl-4 text-slate-700">
+                    <li><strong>Days 22-23:</strong> Graph Representations & Traversals (গ্রাফ উপস্থাপনা এবং ট্রাভার্সাল)</li>
+                    <li><strong>Days 24-25:</strong> Graph Algorithms (গ্রাফ অ্যালগরিদম)</li>
+                    <li><strong>Days 26-28:</strong> Intensive Problem Solving & Mock Interviews (নিবিড় সমস্যা সমাধান এবং মক ইন্টারভিউ)</li>
+                </ul>
+            `
+        }
+    ];
+
+    const accordionContainer = document.getElementById('studyPlanAccordionContainer');
+    studyPlanAccordionData.forEach((item, index) => {
+        const accItem = document.createElement('div');
+        accItem.className = 'border border-slate-200 rounded-lg';
+        accItem.innerHTML = `
+            <button class="accordion-button w-full text-left p-4 bg-indigo-100 hover:bg-indigo-200 focus:outline-none transition-colors flex justify-between items-center">
+                <span class="font-semibold text-indigo-700">${item.title}</span>
+                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div class="accordion-content p-4 bg-white">
+                ${item.content}
+            </div>
+        `;
+        accordionContainer.appendChild(accItem);
+
+        const button = accItem.querySelector('.accordion-button');
+        const content = accItem.querySelector('.accordion-content');
+        const icon = button.querySelector('svg');
+
+        button.addEventListener('click', () => {
+            const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
+            if (isOpen) {
+                content.style.maxHeight = "0px";
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
+
+
+    // Resources Data
+    const resourcesData = {
+        books: [
+            { name: "Introduction to Algorithms (CLRS)", desc: "The 'bible' of algorithms. (অ্যালগরিদমের 'বাইবেল'.)", author: "Cormen, Leiserson, Rivest, Stein" },
+            { name: "Cracking the Coding Interview", desc: "Interview-focused problems and solutions. (সাক্ষাৎকার-কেন্দ্রিক সমস্যা এবং সমাধান।)", author: "Gayle Laakmann McDowell" },
+            { name: "Grokking Algorithms", desc: "Illustrated guide, great for beginners. (সচিত্র গাইড, নতুনদের জন্য দুর্দান্ত।)", author: "Aditya Y. Bhargava" }
+        ],
+        youtube: [
+            { name: "freeCodeCamp.org", desc: "Comprehensive DSA tutorials. (ব্যাপক ডিএসএ টিউটোরিয়াল।)" },
+            { name: "CS Dojo (YK Sugi)", desc: "Simplified complex concepts. (জটিল ধারণা সহজ ভাষায়।)" },
+            { name: "Abdul Bari", desc: "Rigorous explanations of DSA. (ডিএসএ-এর কঠোর ব্যাখ্যা।)" },
+            { name: "NeetCode/NeetCodeIO", desc: "LeetCode problem walkthroughs. (লিটকোড সমস্যা সমাধান।)" },
+            { name: "GeeksforGeeks YouTube", desc: "Tutorials and problem-solving. (টিউটোরিয়াল এবং সমস্যা সমাধান।)" },
+            { name: "Tushar Roy - Coding Made Simple", desc: "Detailed DSA tutorials. (বিস্তারিত ডিএসএ টিউটোরিয়াল।)" }
+        ],
+        platforms: [
+            { name: "LeetCode", desc: "Popular for interview prep, vast problems. (সাক্ষাৎকার প্রস্তুতির জন্য জনপ্রিয়, বিশাল সমস্যা ভাণ্ডার।)" },
+            { name: "GeeksforGeeks", desc: "Tutorials and large problem set. (টিউটোরিয়াল এবং বৃহৎ সমস্যা সেট।)" },
+            { name: "HackerRank", desc: "Structured learning path, challenges. (কাঠামোগত শেখার পথ, চ্যালেঞ্জ।)" },
+            { name: "VisuAlgo", desc: "Visualize data structures and algorithms. (ডেটা স্ট্রাকচার এবং অ্যালগরিদমগুলি ভিজ্যুয়ালাইজ করুন।)" }
+        ],
+        repos: [
+            { name: "William Fiset's Algorithms (Java)", desc: "Comprehensive Java implementations. (জাভাতে ব্যাপক বাস্তবায়ন।)" },
+            { name: "imteekay/algorithms (JS, Python, C++)", desc: "Tutorials, cheat sheets, patterns. (টিউটোরিয়াল, চিট শীট, প্যাটার্ন।)" },
+            { name: "takeUforward (Striver)", desc: "Organized DSA resources. (সংগঠিত ডিএসএ রিসোর্স।)" },
+            { name: "Programiz", desc: "Beginner-friendly tutorials. (নতুনদের জন্য বন্ধুত্বপূর্ণ টিউটোরিয়াল।)" }
+        ]
+    };
+
+    function populateResources(category, containerId) {
+        const container = document.querySelector(`#${containerId} div`);
+        resourcesData[category].forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'resource-card bg-slate-50 p-4 rounded-lg shadow-md border border-slate-200';
+            card.innerHTML = `
+                <h4 class="font-semibold text-md text-indigo-700">${item.name}</h4>
+                <p class="text-sm text-slate-600">${item.desc}${item.author ? ` <span class="text-xs text-slate-500 block">(${item.author})</span>` : ''}</p>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    populateResources('books', 'resourcesBooks');
+    populateResources('youtube', 'resourcesYouTube');
+    populateResources('platforms', 'resourcesPlatforms');
+    populateResources('repos', 'resourcesRepos');
+
+</script>
+
+</body>
+</html>
